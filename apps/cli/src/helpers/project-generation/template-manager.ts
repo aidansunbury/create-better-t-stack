@@ -833,6 +833,26 @@ export async function handleExtras(
 	}
 }
 
+export async function setupDockerComposeTemplates(
+	projectDir: string,
+	context: ProjectConfig,
+): Promise<void> {
+	if (context.dbSetup !== "docker" || context.database === "none") {
+		return;
+	}
+
+	const serverAppDir = path.join(projectDir, "apps/server");
+	const dockerSrcDir = path.join(
+		PKG_ROOT,
+		`templates/backend/server/docker-compose/${context.database}`,
+	);
+
+	if (await fs.pathExists(dockerSrcDir)) {
+		await processAndCopyFiles("**/*", dockerSrcDir, serverAppDir, context);
+	} else {
+	}
+}
+
 export async function setupDeploymentTemplates(
 	projectDir: string,
 	context: ProjectConfig,

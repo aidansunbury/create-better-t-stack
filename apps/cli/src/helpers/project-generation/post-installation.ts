@@ -202,6 +202,12 @@ function getDatabaseInstructions(
 ): string {
 	const instructions = [];
 
+	if (dbSetup === "docker") {
+		instructions.push(
+			`${pc.cyan("•")} Start database docker container: ${`${runCmd} db:start`}`,
+		);
+	}
+
 	if (runtime === "workers" && dbSetup === "d1") {
 		const packageManager = runCmd === "npm run" ? "npm" : runCmd || "npm";
 

@@ -28,6 +28,7 @@ import {
 	setupBackendFramework,
 	setupDbOrmTemplates,
 	setupDeploymentTemplates,
+	setupDockerComposeTemplates,
 	setupExamplesTemplate,
 	setupFrontendTemplates,
 } from "./template-manager";
@@ -44,6 +45,7 @@ export async function createProject(options: ProjectConfig) {
 		await setupBackendFramework(projectDir, options);
 		if (!isConvex) {
 			await setupDbOrmTemplates(projectDir, options);
+			await setupDockerComposeTemplates(projectDir, options);
 			await setupAuthTemplate(projectDir, options);
 		}
 		if (options.examples.length > 0 && options.examples[0] !== "none") {

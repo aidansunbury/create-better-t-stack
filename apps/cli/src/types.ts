@@ -61,6 +61,7 @@ export const DatabaseSetupSchema = z
 		"mongodb-atlas",
 		"supabase",
 		"d1",
+		"docker", // TODO implement me
 		"none",
 	])
 	.describe("Database hosting setup");
