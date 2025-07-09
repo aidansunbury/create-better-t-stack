@@ -202,12 +202,6 @@ function getDatabaseInstructions(
 ): string {
 	const instructions = [];
 
-	if (dbSetup === "docker") {
-		instructions.push(
-			`${pc.cyan("•")} Start database docker container: ${`${runCmd} db:start`}`,
-		);
-	}
-
 	if (runtime === "workers" && dbSetup === "d1") {
 		const packageManager = runCmd === "npm run" ? "npm" : runCmd || "npm";
 
@@ -261,10 +255,19 @@ function getDatabaseInstructions(
 				)} Prisma with Bun may require additional configuration. If you encounter errors,\nfollow the guidance provided in the error messages`,
 			);
 		}
-
+		if (dbSetup === "docker") {
+			instructions.push(
+				`${pc.cyan("•")} Start database docker container: ${`${runCmd} db:start`}`,
+			);
+		}
 		instructions.push(`${pc.cyan("•")} Apply schema: ${`${runCmd} db:push`}`);
 		instructions.push(`${pc.cyan("•")} Database UI: ${`${runCmd} db:studio`}`);
 	} else if (orm === "drizzle") {
+		if (dbSetup === "docker") {
+			instructions.push(
+				`${pc.cyan("•")} Start database docker container: ${`${runCmd} db:start`}`,
+			);
+		}
 		instructions.push(`${pc.cyan("•")} Apply schema: ${`${runCmd} db:push`}`);
 		instructions.push(`${pc.cyan("•")} Database UI: ${`${runCmd} db:studio`}`);
 		if (database === "sqlite" && dbSetup !== "d1") {
