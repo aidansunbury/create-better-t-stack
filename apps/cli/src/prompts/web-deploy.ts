@@ -44,7 +44,7 @@ export async function getDeploymentChoice(
 		{
 			value: "workers",
 			label: "Cloudflare Workers",
-			hint: "Deploy to Cloudflare Workers using Wrangler", 
+			hint: "Deploy to Cloudflare Workers using Wrangler",
 		},
 		{ value: "none", label: "None", hint: "Manual setup" },
 	];

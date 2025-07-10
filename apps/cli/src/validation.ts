@@ -1,5 +1,6 @@
 import path from "node:path";
 import { consola } from "consola";
+import { WEB_FRAMEWORKS } from "./constants";
 import {
 	type Addons,
 	type API,
@@ -16,7 +17,6 @@ import {
 	type Runtime,
 	type WebDeploy,
 } from "./types";
-import { WEB_FRAMEWORKS } from "./constants";
 
 export function processAndValidateFlags(
 	options: CLIInput,

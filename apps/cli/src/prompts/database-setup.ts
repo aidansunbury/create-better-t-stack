@@ -68,7 +68,7 @@ export async function getDBSetupChoice(
 			{
 				value: "docker" as const,
 				label: "Docker",
-				hint: "Run locally with docker-compose",
+				hint: "Run locally with docker compose",
 			},
 			{ value: "none" as const, label: "None", hint: "Manual setup" },
 		];
@@ -77,7 +77,7 @@ export async function getDBSetupChoice(
 			{
 				value: "docker" as const,
 				label: "Docker",
-				hint: "Run locally with docker-compose",
+				hint: "Run locally with docker compose",
 			},
 			{ value: "none" as const, label: "None", hint: "Manual setup" },
 		];
@@ -91,7 +91,7 @@ export async function getDBSetupChoice(
 			{
 				value: "docker" as const,
 				label: "Docker",
-				hint: "Run locally with docker-compose",
+				hint: "Run locally with docker compose",
 			},
 			{ value: "none" as const, label: "None", hint: "Manual setup" },
 		];

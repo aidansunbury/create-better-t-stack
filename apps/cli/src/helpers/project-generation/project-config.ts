@@ -145,8 +145,10 @@ async function updateRootPackageJson(
 			}
 		}
 		if (options.dbSetup === "docker") {
-			scripts["db:start"] = `npm run db:start --workspace ${backendPackageName}`;
-			scripts["db:watch"] = `npm run db:watch --workspace ${backendPackageName}`;
+			scripts["db:start"] =
+				`npm run db:start --workspace ${backendPackageName}`;
+			scripts["db:watch"] =
+				`npm run db:watch --workspace ${backendPackageName}`;
 			scripts["db:stop"] = `npm run db:stop --workspace ${backendPackageName}`;
 			scripts["db:down"] = `npm run db:down --workspace ${backendPackageName}`;
 		}
@@ -271,10 +273,10 @@ async function updateServerPackageJson(
 	}
 
 	if (options.dbSetup === "docker") {
-		scripts["db:start"] = "docker-compose up -d";
-		scripts["db:watch"] = "docker-compose up";
-		scripts["db:stop"] = "docker-compose stop";
-		scripts["db:down"] = "docker-compose down";
+		scripts["db:start"] = "docker compose up -d";
+		scripts["db:watch"] = "docker compose up";
+		scripts["db:stop"] = "docker compose stop";
+		scripts["db:down"] = "docker compose down";
 	}
 
 	await fs.writeJson(serverPackageJsonPath, serverPackageJson, {
