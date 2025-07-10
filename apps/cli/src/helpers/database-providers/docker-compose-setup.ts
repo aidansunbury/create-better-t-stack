@@ -53,11 +53,9 @@ function displayDockerInstallInstructions(
 				? "MySQL"
 				: "PostgreSQL";
 
-	log.info(`Docker Installation Required:
-
-Docker is required to run ${databaseName} locally. It can be installed automatically by downloading Docker Desktop for ${platformName}:
-
-${pc.blue(installUrl)}`);
+	log.info(
+		`Docker required for ${databaseName}. Install for ${platformName}: ${pc.blue(installUrl)}`,
+	);
 }
 
 export async function setupDockerCompose(config: ProjectConfig): Promise<void> {
@@ -73,7 +71,6 @@ export async function setupDockerCompose(config: ProjectConfig): Promise<void> {
 	try {
 		const platform = os.platform();
 
-		// Check Docker availability first
 		const dockerInstalled = await isDockerInstalled();
 
 		if (!dockerInstalled) {
@@ -85,20 +82,12 @@ export async function setupDockerCompose(config: ProjectConfig): Promise<void> {
 		const dockerRunning = await isDockerRunning();
 
 		if (!dockerRunning) {
-			s.stop(pc.yellow("Docker not running"));
-			log.warn(
-				pc.yellow(
-					"Docker is installed but not running. Please start Docker and try again.",
-				),
-			);
+			s.stop(pc.yellow("Docker is installed but not running."));
 			return;
 		}
 
-		s.start("Setting up Docker Compose for local development...");
 		await writeEnvFile(projectDir, database, projectName);
-		s.stop(pc.green("Docker Compose setup completed"));
 	} catch (error) {
-		s.stop(pc.red("Failed to setup Docker Compose"));
 		if (error instanceof Error) {
 			log.error(pc.red(`Error: ${error.message}`));
 		}

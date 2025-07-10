@@ -844,7 +844,7 @@ export async function setupDockerComposeTemplates(
 	const serverAppDir = path.join(projectDir, "apps/server");
 	const dockerSrcDir = path.join(
 		PKG_ROOT,
-		`templates/backend/server/docker-compose/${context.database}`,
+		`templates/db-setup/docker-compose/${context.database}`,
 	);
 
 	if (await fs.pathExists(dockerSrcDir)) {
