@@ -373,6 +373,13 @@ export function processAndValidateFlags(
 		}
 	}
 
+	if (config.dbSetup === "docker" && config.database === "sqlite") {
+		consola.fatal(
+			"Docker setup is not compatible with SQLite database. SQLite is file-based and doesn't require Docker. Please use '--database postgres', '--database mysql', '--database mongodb', or choose a different setup.",
+		);
+		process.exit(1);
+	}
+
 	if (
 		providedFlags.has("runtime") &&
 		options.runtime === "workers" &&
