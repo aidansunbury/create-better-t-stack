@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "bun run generate-analytics && bun run generate-schema && next build",
+    "build": "next build",
     "dev": "next dev --turbopack",
     "start": "next start",
     "check": "biome check --write .",

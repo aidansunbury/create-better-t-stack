@@ -600,6 +600,21 @@ const analyzeStackCompatibility = (stack: StackState): CompatibilityResult => {
 						message: "Backend set to 'Hono' (required by Cloudflare D1)",
 					});
 				}
+			} else if (nextStack.dbSetup === "docker") {
+				if (nextStack.database === "sqlite") {
+					notes.dbSetup.notes.push(
+						"Docker setup is not needed for SQLite. It will be set to 'Basic Setup'.",
+					);
+					notes.dbSetup.hasIssue = true;
+					notes.database.hasIssue = true;
+					nextStack.dbSetup = "none";
+					changed = true;
+					changes.push({
+						category: "dbSetup",
+						message:
+							"DB Setup set to 'Basic Setup' (SQLite doesn't need Docker)",
+					});
+				}
 			}
 
 			if (nextStack.runtime === "workers") {
@@ -887,6 +902,7 @@ const generateCommand = (stackState: StackState): string => {
 			"supabase",
 			"prisma-postgres",
 			"mongodb-atlas",
+			"docker",
 		].includes(stackState.dbSetup);
 
 		if (

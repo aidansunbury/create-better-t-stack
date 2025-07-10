@@ -108,6 +108,7 @@
 				"mongodb-atlas",
 				"supabase",
 				"d1",
+				"docker",
 				"none"
 			],
 			"description": "Database hosting setup"

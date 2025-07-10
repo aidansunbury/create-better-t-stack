@@ -312,6 +312,13 @@ export const TECH_OPTIONS = {
 			color: "from-emerald-400 to-emerald-600",
 		},
 		{
+			id: "docker",
+			name: "Docker",
+			description: "Local database with Docker Compose",
+			icon: "/icon/docker.svg",
+			color: "from-blue-500 to-blue-700",
+		},
+		{
 			id: "none",
 			name: "Basic Setup",
 			description: "No cloud DB integration",
