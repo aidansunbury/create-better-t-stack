@@ -7,9 +7,10 @@ import type {
 	ProjectConfig,
 	Runtime,
 } from "../../types";
+import { getDockerStatus } from "../../utils/docker-utils";
 import { getPackageExecutionCommand } from "../../utils/package-runner";
 
-export function displayPostInstallInstructions(
+export async function displayPostInstallInstructions(
 	config: ProjectConfig & { depsInstalled: boolean },
 ) {
 	const {
@@ -34,7 +35,7 @@ export function displayPostInstallInstructions(
 
 	const databaseInstructions =
 		!isConvex && database !== "none"
-			? getDatabaseInstructions(database, orm, runCmd, runtime, dbSetup)
+			? await getDatabaseInstructions(database, orm, runCmd, runtime, dbSetup)
 			: "";
 
 	const tauriInstructions = addons?.includes("tauri")
@@ -193,14 +194,23 @@ function getLintingInstructions(runCmd?: string): string {
 	)} Format and lint fix: ${`${runCmd} check`}\n`;
 }
 
-function getDatabaseInstructions(
+async function getDatabaseInstructions(
 	database: Database,
 	orm?: ORM,
 	runCmd?: string,
 	runtime?: Runtime,
 	dbSetup?: DatabaseSetup,
-): string {
+): Promise<string> {
 	const instructions = [];
+
+	if (dbSetup === "docker") {
+		const dockerStatus = await getDockerStatus(database);
+
+		if (dockerStatus.message) {
+			instructions.push(dockerStatus.message);
+			instructions.push("");
+		}
+	}
 
 	if (runtime === "workers" && dbSetup === "d1") {
 		const packageManager = runCmd === "npm run" ? "npm" : runCmd || "npm";

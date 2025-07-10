@@ -96,7 +96,7 @@ export async function createProject(options: ProjectConfig) {
 
 		await initializeGit(projectDir, options.git);
 
-		displayPostInstallInstructions({
+		await displayPostInstallInstructions({
 			...options,
 			depsInstalled: options.install,
 		});
