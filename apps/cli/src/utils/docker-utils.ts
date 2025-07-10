@@ -71,7 +71,7 @@ export async function getDockerStatus(database: Database): Promise<{
 		return {
 			installed: true,
 			running: false,
-			message: `${pc.yellow("IMPORTANT:")} Docker is installed but not running. Please start Docker Desktop.`,
+			message: `${pc.yellow("IMPORTANT:")} Docker is installed but not running.`,
 		};
 	}
 

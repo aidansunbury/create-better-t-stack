@@ -265,9 +265,16 @@ async function getDatabaseInstructions(
 				)} Prisma with Bun may require additional configuration. If you encounter errors,\nfollow the guidance provided in the error messages`,
 			);
 		}
+		if (database === "mongodb" && dbSetup === "docker") {
+			instructions.push(
+				`${pc.yellow(
+					"WARNING:",
+				)} Prisma + MongoDB + Docker combination may not work.`,
+			);
+		}
 		if (dbSetup === "docker") {
 			instructions.push(
-				`${pc.cyan("•")} Start database docker container: ${`${runCmd} db:start`}`,
+				`${pc.cyan("•")} Start docker container: ${`${runCmd} db:start`}`,
 			);
 		}
 		instructions.push(`${pc.cyan("•")} Apply schema: ${`${runCmd} db:push`}`);
@@ -275,7 +282,7 @@ async function getDatabaseInstructions(
 	} else if (orm === "drizzle") {
 		if (dbSetup === "docker") {
 			instructions.push(
-				`${pc.cyan("•")} Start database docker container: ${`${runCmd} db:start`}`,
+				`${pc.cyan("•")} Start docker container: ${`${runCmd} db:start`}`,
 			);
 		}
 		instructions.push(`${pc.cyan("•")} Apply schema: ${`${runCmd} db:push`}`);
@@ -285,6 +292,12 @@ async function getDatabaseInstructions(
 				`${pc.cyan(
 					"•",
 				)} Start local DB (if needed): ${`cd apps/server && ${runCmd} db:local`}`,
+			);
+		}
+	} else if (orm === "mongoose") {
+		if (dbSetup === "docker") {
+			instructions.push(
+				`${pc.cyan("•")} Start docker container: ${`${runCmd} db:start`}`,
 			);
 		}
 	} else if (orm === "none") {
