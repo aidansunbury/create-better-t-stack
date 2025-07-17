@@ -224,9 +224,6 @@ async function updateRootPackageJson(
 		if (!workspaces.includes("apps/*")) {
 			workspaces.push("apps/*");
 		}
-		if (!workspaces.includes("packages/*")) {
-			workspaces.push("packages/*");
-		}
 	}
 
 	await fs.writeJson(rootPackageJsonPath, packageJson, { spaces: 2 });

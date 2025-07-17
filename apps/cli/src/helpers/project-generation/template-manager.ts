@@ -57,7 +57,10 @@ export async function copyBaseTemplate(
 ): Promise<void> {
 	const templateDir = path.join(PKG_ROOT, "templates/base");
 	await processAndCopyFiles(["**/*"], templateDir, projectDir, context);
-	await fs.ensureDir(path.join(projectDir, "packages"));
+
+	if (context.backend === "convex") {
+		await fs.ensureDir(path.join(projectDir, "packages"));
+	}
 }
 
 export async function setupFrontendTemplates(
@@ -784,11 +787,22 @@ export async function handleExtras(
 	const hasNative = hasNativeWind || hasUnistyles;
 
 	if (context.packageManager === "pnpm") {
-		const pnpmWorkspaceSrc = path.join(extrasDir, "pnpm-workspace.yaml");
 		const pnpmWorkspaceDest = path.join(projectDir, "pnpm-workspace.yaml");
-		if (await fs.pathExists(pnpmWorkspaceSrc)) {
-			await fs.copy(pnpmWorkspaceSrc, pnpmWorkspaceDest);
+		const workspaces = [];
+
+		if (context.backend === "convex") {
+			const needsAppsDir =
+				context.frontend.length > 0 || context.addons.includes("starlight");
+			if (needsAppsDir) {
+				workspaces.push("apps/*");
+			}
+			workspaces.push("packages/*");
+		} else {
+			workspaces.push("apps/*");
 		}
+
+		const workspaceContent = `packages:\n${workspaces.map((ws) => `  - "${ws}"`).join("\n")}\n`;
+		await fs.writeFile(pnpmWorkspaceDest, workspaceContent);
 	}
 
 	if (
